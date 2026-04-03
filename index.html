@@ -1,65 +1,67 @@
-Мухсина, [4/2/2026 9:56 PM]
+Мухсина, [4/2/2026 10:08 PM]
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>Дерево целей: найди свой зелёный лист</title>
+  <title>Goal Tree — Minimalist White Leaf Generator</title>
   <style>
     * {
-      box-sizing: border-box;
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
     }
 
     body {
-      background: linear-gradient(145deg, #eef2f0 0%, #d9e2dc 100%);
-      font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      background: #eef2f5;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, sans-serif;
       padding: 2rem 1.5rem;
-      color: #1e2f2c;
+      color: #1a2e2a;
     }
 
-    /* главный контейнер */
+    /* main container */
     .app-container {
-      max-width: 1300px;
+      max-width: 1280px;
       margin: 0 auto;
-      background: rgba(255, 255, 245, 0.9);
+      background: #ffffffdd;
       backdrop-filter: blur(2px);
-      border-radius: 3rem;
-      box-shadow: 0 25px 45px rgba(0, 20, 10, 0.2);
-      padding: 2rem 1.8rem;
-      transition: all 0.2s;
+      border-radius: 2rem;
+      box-shadow: 0 20px 35px -10px rgba(0, 20, 10, 0.15);
+      padding: 2rem 2rem;
+      transition: 0.2s;
     }
 
-    /* опросная секция */
+    /* questionnaire cards */
     .questionnaire {
-      background: #fefcf5;
-      border-radius: 2rem;
-      padding: 1.8rem;
+      background: #fefef9;
+      border-radius: 1.8rem;
+      padding: 1.5rem;
       margin-bottom: 2rem;
-      box-shadow: 0 8px 18px rgba(0,0,0,0.05);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+      border: 1px solid #e2e8e2;
     }
 
     .question-group {
-      margin-bottom: 2rem;
+      margin-bottom: 1.8rem;
     }
 
     .question-group label {
-      font-weight: 700;
-      font-size: 1.3rem;
-      display: block;
-      margin-bottom: 0.75rem;
-      color: #1f4d3c;
-      border-left: 5px solid #3ba06b;
-      padding-left: 1rem;
+      font-weight: 600;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.6rem;
+      color: #1f543f;
+      letter-spacing: -0.2px;
     }
 
     textarea {
       width: 100%;
-      padding: 1rem;
-      font-size: 1rem;
-      border-radius: 1.5rem;
-      border: 1px solid #cbdcd2;
+      padding: 0.9rem 1.2rem;
+      font-size: 0.95rem;
+      border-radius: 1.2rem;
+      border: 1px solid #cfdfd4;
       background: white;
       font-family: inherit;
       resize: vertical;
@@ -68,11 +70,11 @@
 
     textarea:focus {
       outline: none;
-      border-color: #2e7d5e;
-      box-shadow: 0 0 0 3px rgba(46,125,94,0.2);
+      border-color: #2b8c5e;
+      box-shadow: 0 0 0 3px rgba(43, 140, 94, 0.15);
     }
 
-    /* стиль кнопок (easy, working, no compromise) */
+    /* 3 style buttons */
     .style-row {
       display: flex;
       flex-wrap: wrap;
@@ -82,117 +84,114 @@
     }
 
     .style-btn {
-      background: #e9ecea;
+      background: #edf2ef;
       border: none;
-      padding: 0.9rem 1.8rem;
-      font-size: 1.1rem;
+      padding: 0.8rem 1.8rem;
+      font-size: 1rem;
       font-weight: 600;
       border-radius: 60px;
       cursor: pointer;
-      transition: all 0.2s ease;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-      color: #2c4b3e;
+      transition: all 0.2s;
+      color: #2b4b3c;
       flex: 1;
       min-width: 140px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
     }
 
     .style-btn.active {
       background: #2e7d5e;
       color: white;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-      transform: scale(0.98);
+      box-shadow: 0 5px 12px rgba(0,0,0,0.1);
     }
 
-    .style-btn[data-style="easy"]:hover { background: #cfe8dc; }
-    .style-btn[data-style="working"]:hover { background: #d3e3db; }
-    .style-btn[data-style="no-compromise"]:hover { background: #c0d9cf; }
+    .style-btn[data-style="easy"]:hover { background: #deede5; }
+    .style-btn[data-style="working"]:hover { background: #d5e6de; }
+    .style-btn[data-style="no-compromise"]:hover { background: #caddd2; }
 
-    /* зеленая кнопка генерации */
+    /* green generate button */
     .generate-btn {
       background: #2b8c5e;
       border: none;
       width: 100%;
       padding: 1rem;
-      font-size: 1.5rem;
+      font-size: 1.4rem;
       font-weight: bold;
       color: white;
       border-radius: 60px;
       cursor: pointer;
-      transition: 0.2s;
-      margin-top: 0.5rem;
-      margin-bottom: 2rem;
-      letter-spacing: 1px;
+      transition: 0.15s linear;
+      margin: 0.5rem 0 2rem 0;
+      letter-spacing: 0.5px;
       box-shadow: 0 6px 0 #1a5a3e;
     }
 
     .generate-btn:active {
       transform: translateY(2px);
-      box-shadow: 0 3px 0 #1a5a3e;
+      box-shadow: 0 2px 0 #1a5a3e;
     }
 
-    /* область дерева */
+    /* tree area — minimal style */
     .tree-area {
-      background: #f6f3e9;
-      border-radius: 2.5rem;
-      padding: 1.5rem;
-      box-shadow: inset 0 0 0 2px #fff9e8, 0 12px 24px rgba(0,0,0,0.1);
+      background: #fafaf5;
+      border-radius: 2rem;
+      padding: 1rem;
+      box-shadow: inset 0 0 0 1px #fffdf5, 0 10px 20px rgba(0,0,0,0.05);
       min-height: 520px;
-      transition: all 0.3s;
     }
 
     .tree-title {
       text-align: center;
-      font-weight: 600;
-      color: #2d5a47;
+      font-weight: 500;
+      color: #3a6b58;
       margin-bottom: 1rem;
-      font-size: 1.2rem;
+      font-size: 0.95rem;
+      letter-spacing: 0.3px;
     }
 
     .tree-svg-container {
       display: flex;
       justify-content: center;
       overflow-x: auto;
-      cursor: pointer;
     }
 
+    /* minimalistic tree SVG — white leaves + one bright green leaf */
     svg {
       max-width: 100%;
       height: auto;
-      background: #fef9e6;
+      background: #fcf9f0;
       border-radius: 2rem;
-      box-shadow: 0 5px 12px rgba(0,0,0,0.1);
+      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.05));
     }
 
-    /* стиль для тултипа / модалки */
-
-Мухсина, [4/2/2026 9:56 PM]
-.modal {
+Мухсина, [4/2/2026 10:08 PM]
+/* modal for tasks */
+    .modal {
       display: none;
       position: fixed;
       top: 0; left: 0;
       width: 100%; height: 100%;
-      background: rgba(30, 40, 35, 0.7);
-      backdrop-filter: blur(5px);
+      background: rgba(25, 35, 30, 0.6);
+      backdrop-filter: blur(6px);
       align-items: center;
       justify-content: center;
-      z-index: 1000;
+      z-index: 2000;
     }
 
     .modal-card {
-      background: #fffffa;
+      background: #ffffffea;
       max-width: 500px;
       width: 90%;
       border-radius: 2rem;
       padding: 2rem;
-      box-shadow: 0 30px 40px rgba(0,0,0,0.3);
-      animation: fadeSlide 0.2s ease;
+      box-shadow: 0 30px 40px rgba(0,0,0,0.2);
+      animation: fadeUp 0.2s ease;
     }
 
     .modal-card h3 {
-      font-size: 1.8rem;
-      color: #22664a;
+      font-size: 1.7rem;
+      color: #1f6e4a;
       margin-bottom: 1rem;
-      border-left: 8px solid #47b27d;
+      border-left: 6px solid #42b883;
       padding-left: 1rem;
     }
 
@@ -203,39 +202,37 @@
 
     .task-list li {
       margin: 0.8rem 0;
-      font-size: 1rem;
+      font-size: 0.98rem;
       line-height: 1.4;
     }
 
     .close-modal {
-      background: #e0e7e2;
+      background: #e3ece6;
       border: none;
-      padding: 0.6rem 1.5rem;
-      border-radius: 3rem;
-      font-weight: bold;
+      padding: 0.6rem 1.6rem;
+      border-radius: 2rem;
+      font-weight: 600;
       cursor: pointer;
-      margin-top: 1rem;
-      font-size: 1rem;
+      font-size: 0.95rem;
     }
 
-    @keyframes fadeSlide {
-      from { opacity: 0; transform: translateY(-20px);}
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px);}
       to { opacity: 1; transform: translateY(0);}
     }
 
     footer {
-      font-size: 0.75rem;
       text-align: center;
-      margin-top: 1.5rem;
-      color: #4f6b5f;
+      font-size: 0.7rem;
+      margin-top: 1.2rem;
+      color: #6b8b7a;
     }
 
-    @media (max-width: 720px) {
+    @media (max-width: 680px) {
       body { padding: 1rem; }
       .app-container { padding: 1rem; }
-      .question-group label { font-size: 1.1rem; }
-      .style-btn { padding: 0.6rem 1rem; font-size: 0.9rem;}
-      .generate-btn { font-size: 1.2rem; }
+      .style-btn { padding: 0.5rem 1rem; font-size: 0.85rem; }
+      .generate-btn { font-size: 1.1rem; }
     }
   </style>
 </head>
@@ -243,323 +240,307 @@
 <div class="app-container">
   <div class="questionnaire">
     <div class="question-group">
-      <label>🌱 Чего вы хотите добиться?</label>
-      <textarea id="goalInput" rows="2" placeholder="Например: запустить свой проект, выучить английский до C1, сменить профессию..."></textarea>
+      <label>🌿 1. What do you want to achieve?</label>
+      <textarea id="goalInput" rows="2" placeholder="e.g., launch a freelance career, learn data science, run a marathon..."></textarea>
     </div>
     <div class="question-group">
-      <label>⛰️ Что вас останавливает?</label>
-      <textarea id="blockerInput" rows="2" placeholder="Страх, нехватка времени, деньги, неуверенность..."></textarea>
+      <label>⚠️ 2. What’s holding you back?</label>
+      <textarea id="blockerInput" rows="2" placeholder="e.g., fear of failure, lack of time, no mentor, procrastination..."></textarea>
     </div>
     <div class="question-group">
-      <label>🧰 Что у вас уже есть? (навыки, окружение, время)</label>
-      <textarea id="resourcesInput" rows="2" placeholder="Умею верстать, есть пара часов вечером, поддерживающие друзья..."></textarea>
+      <label>🧰 3. What do you already have? (skills, environment, time)</label>
+      <textarea id="resourcesInput" rows="2" placeholder="e.g., 1 hour each evening, basic coding skills, supportive friends..."></textarea>
     </div>
   </div>
 
   <div class="style-row">
-    <button class="style-btn" data-style="easy">🍃 EASY — мягкий старт</button>
-    <button class="style-btn" data-style="working">⚡ WORKING — рабочий баланс</button>
-    <button class="style-btn" data-style="no-compromise">🔥 NO COMPROMISE — максимум</button>
+    <button class="style-btn" data-style="easy">🍃 EASY · gentle start</button>
+    <button class="style-btn" data-style="working">⚡ WORKING · balanced rhythm</button>
+    <button class="style-btn" data-style="no-compromise">🔥 NO COMPROMISE · full drive</button>
   </div>
 
-  <button class="generate-btn" id="generateTreeBtn">🌳 GENERATE MY TREE 🌳</button>
+  <button class="generate-btn" id="generateTreeBtn">🌱 GENERATE MY TREE 🌱</button>
 
   <div class="tree-area">
-    <div class="tree-title">🍃 Ваше дерево решений — нажмите на ярко-зелёный лист 🍃</div>
+    <div class="tree-title">❄️ white leaf forest — one bright green leaf holds your quests</div>
     <div id="treeVisual" class="tree-svg-container">
-      <!-- сюда динамически отрисуем SVG дерево -->
-      <svg width="550" height="480" viewBox="0 0 550 480" xmlns="http://www.w3.org/2000/svg">
-        <text x="200" y="240" fill="#8faa9b" font-size="18">✨ нажмите "GENERATE MY TREE" ✨</text>
+      <!-- Minimalist tree placeholder -->
+      <svg width="540" height="460" viewBox="0 0 540 460" xmlns="http://www.w3.org/2000/svg">
+        <text x="270" y="220" fill="#9eb7a8" font-size="16" text-anchor="middle">🌸 press "GENERATE MY TREE" 🌸</text>
       </svg>
     </div>
   </div>
-  <footer>Зелёный лист — ваш главный фокус. Нажмите, чтобы увидеть персональные задачи.</footer>
+  <footer>✨ Click the vivid green leaf — your personal action plan appears ✨</footer>
 </div>
 
 <div id="taskModal" class="modal">
   <div class="modal-card">
-    <h3>📋 ЗАДАНИЯ · ЗЕЛЁНЫЙ ЛИСТ</h3>
+    <h3>📋 YOUR TASKS · GREEN LEAF</h3>
     <ul class="task-list" id="taskListUl">
-      <li>Загрузка...</li>
+      <li>🌟 Tasks will appear here</li>
     </ul>
-    <button class="close-modal" id="closeModalBtn">Понял, действую!</button>
+    <button class="close-modal" id="closeModalBtn">Got it, let's act!</button>
   </div>
 </div>
 
 <script>
-  // -------- вспомогательные функции для генерации задач на основе ответов + стиля --------
+  // ------------------- DYNAMIC TASK GENERATOR -------------------
   function generateTasks(goal, blocker, resources, style) {
-    // если поля пустые — подставим нейтральные значения
-    const finalGoal = goal.trim() || "достичь важной цели";
-    const finalBlocker = blocker.trim() || "некоторые внутренние барьеры";
-    const finalResources = resources.trim() || "базовые навыки и немного времени";
+    let finalGoal = goal.trim() || "achieve a meaningful goal";
+    let finalBlocker = blocker.trim() || "some internal or external blocks";
+    let finalResources = resources.trim() || "basic skills & some willpower";
 
-Мухсина, [4/2/2026 9:56 PM]
-// базовая структура заданий (3-5 пунктов) в зависимости от стиля
-    // создаём реалистичные, полезные шаги
     let tasks = [];
 
-    // общие темы, которые персонализируем
-    const goalShort = finalGoal.length > 40 ? finalGoal.slice(0,40)+"…" : finalGoal;
-
-    if (style === "easy") {
+Мухсина, [4/2/2026 10:08 PM]
+if (style === "easy") {
       tasks = [
-        ✅ Разбейте «${goalShort}» на 3 крошечных шага (по 15 минут).,
-        📖 Изучите 1 технику преодоления «${finalBlocker}»: прочитайте статью или посмотрите видео (10 мин).,
-        🧠 Используйте ресурс: ${finalResources} — выделите 20 минут сегодня вечером на первый микрошаг.,
-        📅 Заведите привычку: каждый день записывайте 1 маленькую победу, связанную с целью.,
-        🍃 Спокойное начало: настройте окружение — уберите один отвлекающий фактор.
+        🍃 Break "${finalGoal.substring(0, 50)}" into 3 tiny 15-minute steps.,
+        📖 Read one short article about overcoming: ${finalBlocker.substring(0, 45)}.,
+        🧠 Use your resource (${finalResources.substring(0, 45)}) — dedicate 20 minutes today.,
+        📅 Start a simple habit: note one small win every evening.,
+        🌿 Remove one single distraction from your environment tonight.
       ];
     } 
     else if (style === "working") {
       tasks = [
-        🎯 Сформулируйте конкретный измеримый результат для «${goalShort}» на эту неделю.,
-        ⚡ Проработайте барьер «${finalBlocker}»: составьте список из 3 возможных решений и выберите лучшее.,
-        ⏱️ Используя ${finalResources}, составьте расписание на 5 дней (по 40 минут в день) для продвижения.,
-        📊 Найдите 1 наставника или единомышленника, кто может помочь с вашим вызовом.,
-        📌 Ежедневный чекинг: вечером отвечайте на вопрос «Что сегодня приблизило меня к цели?»
+        🎯 Set a specific measurable weekly target for "${finalGoal.substring(0, 50)}".,
+        ⚡ Analyze "${finalBlocker.substring(0, 50)}" → list 3 solutions, pick the best.,
+        ⏱️ Use ${finalResources.substring(0, 50)} to schedule five 40min deep-work sessions.,
+        🤝 Find one accountability partner or mentor this week.,
+        📌 Daily check: "What moved me closer to my goal today?"
       ];
     } 
     else { // no compromise
       tasks = [
-        🔥 Дедлайн-марафон: установите жёсткий срок для «${goalShort}» (не более 3 недель).,
-        💥 Устраните первопричину «${finalBlocker}» — создайте план атаки с конкретными этапами и метриками.,
-        🚀 Используйте ресурс ${finalResources} на 200%: удвойте выделяемое время (минимум 2 часа ежедневно).,
-        🏆 Каждый день выполняйте не менее 3 ключевых действий, ведущих к цели, без пропусков.,
-        📈 Внедрите систему жёсткой отчётности: публичный трекер или партнёр по ответственности.,
-        🎯 Сделайте «рывок»: в ближайшие 48 часов выполните самый сложный шаг, который откладывали.
+        🔥 Set a hard deadline (max 3 weeks) for "${finalGoal.substring(0, 55)}".,
+        💥 Eradicate root cause of "${finalBlocker.substring(0, 55)}" → make a zero-excuses action plan.,
+        🚀 Double your investment: use ${finalResources.substring(0, 50)} for at least 2 hours daily.,
+        🏆 Complete 3 key actions every single day, no skip allowed.,
+        📈 Public tracker: share your progress daily with a peer group.,
+        🎯 Do the hardest task you've been postponing within 48 hours.
       ];
     }
 
-    // добавим пару персонализированных штрихов из ресурсов/блокеров
-    if (finalResources.includes("время") || finalResources.includes("час")) {
-      tasks.push(⏰ У вас есть ресурс времени — заблокируйте его в календаре без компромиссов.);
+    // extra personalization hints
+    if (finalResources.toLowerCase().includes("hour") || finalResources.toLowerCase().includes("time")) {
+      tasks.push(⏰ Time is your ally: block calendar slots without compromise.);
     }
-    if (finalBlocker.includes("страх") || finalBlocker.includes("боюсь")) {
-      tasks.push(💪 Работа со страхом: сделайте одно действие, которое вызывает лёгкий дискомфорт ради цели.);
+    if (finalBlocker.toLowerCase().includes("fear") || finalBlocker.toLowerCase().includes("scared")) {
+      tasks.push(💪 Fear action: take one small step that feels slightly uncomfortable.);
     }
-    if (finalGoal.includes("проект") || finalGoal.includes("запустить")) {
-      tasks.push(🚀 Минимально жизнеспособный результат: определите главную функцию вашего проекта.);
+    if (finalGoal.toLowerCase().includes("project") || finalGoal.toLowerCase().includes("start")) {
+      tasks.push(🚀 Define the minimum viable version of your project.);
     }
 
-    // убираем дубликаты, оставляем уникальные (по первым 20 символам, но проще ограничимся 7-8 пунктами)
-    const unique = [];
-    const set = new Set();
+    // remove near duplicates (simple unique by first 55 chars)
+    const uniqueTasks = [];
+    const seen = new Set();
     for (let t of tasks) {
       const key = t.slice(0, 60);
-      if (!set.has(key)) {
-        set.add(key);
-        unique.push(t);
+      if (!seen.has(key)) {
+        seen.add(key);
+        uniqueTasks.push(t);
       }
     }
-    // не больше 8 заданий
-    return unique.slice(0, 8);
+    return uniqueTasks.slice(0, 8);
   }
 
-  // -------- отрисовка SVG дерева с одним ярко-зеленым листом (кликабельный) --------
-  // Все листья бледно-серые (#bbbb99 / #cbd0bb), один лист ярко-зеленый (#3ac97c / #2ecc71)
-  let currentLeafClickHandler = null;   // храним функцию для клика по листу
+  // ------------------- MINIMALIST TREE DRAWING -------------------
+  // white leaves + ONE vivid green leaf (clickable)
+  // tree structure: trunk, branches, many white leaves, one green highlight
+  let currentLeafClickHandler = null;
 
-  function renderTree(leafClickCallback) {
+  function drawMinimalTree(onGreenLeafClick) {
     const container = document.getElementById('treeVisual');
     if (!container) return;
 
-    // ширина/высота
-    const width = 560, height = 480;
-    // стилизуем дерево — ствол, крона, листья (круги или эллипсы)
-    // сделаем 9-12 листьев в разных частях кроны. Один будет ярким (index = случайный, но стабильный для сессии)
-    // чтобы при повторной генерации дерево обновлялось, выберем случайный индекс листа, но для единообразия можно фиксировать random seed
+    const width = 560;
+    const height = 480;
 
-Мухсина, [4/2/2026 9:56 PM]
-// однако пользователю каждый раз может выпадать разный лист — это даже интересно
-    const leafCount = 12;
-    // позиции листьев (относительно кроны)
+    // total leaves: 14-16, arranged naturally
     const leafPositions = [
-      { cx: 280, cy: 100 },  // верхушка
-      { cx: 240, cy: 130 }, { cx: 320, cy: 130 },
-      { cx: 210, cy: 170 }, { cx: 350, cy: 170 },
-      { cx: 260, cy: 190 }, { cx: 310, cy: 190 },
-      { cx: 230, cy: 220 }, { cx: 340, cy: 220 },
-      { cx: 280, cy: 240 }, { cx: 200, cy: 260 }, { cx: 370, cy: 260 },
-      { cx: 260, cy: 280 }, { cx: 310, cy: 280 } // добавим пару для красоты
-    ].slice(0, leafCount);
+      { cx: 280, cy: 85 },   // top
+      { cx: 245, cy: 110 }, { cx: 315, cy: 110 },
+      { cx: 210, cy: 145 }, { cx: 350, cy: 145 },
+      { cx: 235, cy: 175 }, { cx: 325, cy: 175 },
+      { cx: 190, cy: 200 }, { cx: 370, cy: 200 },
+      { cx: 260, cy: 215 }, { cx: 305, cy: 215 },
+      { cx: 215, cy: 245 }, { cx: 345, cy: 245 },
+      { cx: 280, cy: 265 }, { cx: 250, cy: 285 }, { cx: 315, cy: 285 }
+    ];
     
-    // если позиций меньше чем leafCount, добавим
-    while(leafPositions.length < leafCount) {
-      leafPositions.push({ cx: 250 + Math.random() * 80, cy: 150 + Math.random() * 130 });
-    }
-    // индекс яркого листа (от 0 до leafCount-1)
+    const leafCount = leafPositions.length;
+    // random bright leaf index (changes every generation -> fresh)
     const brightLeafIndex = Math.floor(Math.random() * leafCount);
+    
+    let svgHtml = <svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" style="background:#fcf9f0; border-radius: 28px;">;
+    
+    // ===== TRUNK ===== minimalist soft brown
+    svgHtml += <path d="M268 330 L258 470 L302 470 L292 330 Z" fill="#b3aa8c" stroke="#9b8f6f" stroke-width="1.2"/>;
 
-    // строим SVG
-    let svgHtml = <svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" style="font-family:monospace">;
+Мухсина, [4/2/2026 10:08 PM]
+svgHtml += <path d="M268 330 L258 470 L302 470 L292 330 Z" fill="#c2b792" opacity="0.7"/>;
     
-    // фон кроны мягкий
-    svgHtml += <ellipse cx="280" cy="210" rx="140" ry="120" fill="#dde6d5" opacity="0.4" />;
-    // ствол
-    svgHtml += <path d="M270 310 L260 450 L300 450 L290 310 Z" fill="#8B5A2B" stroke="#6B3E1A" stroke-width="2"/>;
-    svgHtml += <path d="M270 310 L260 450 L300 450 L290 310 Z" fill="#a56b2f" opacity="0.7"/>;
-    // ветки
-    svgHtml += <path d="M270 320 L210 260" stroke="#7c501f" stroke-width="6" fill="none" stroke-linecap="round"/>;
-    svgHtml += <path d="M290 315 L350 255" stroke="#7c501f" stroke-width="6" fill="none" stroke-linecap="round"/>;
-    svgHtml += <path d="M280 290 L240 240" stroke="#7c501f" stroke-width="5" fill="none"/>;
-    svgHtml += <path d="M280 290 L320 235" stroke="#7c501f" stroke-width="5" fill="none"/>;
+    // main branches
+    svgHtml += <path d="M270 340 L215 275" stroke="#a59778" stroke-width="6" fill="none" stroke-linecap="round"/>;
+    svgHtml += <path d="M290 335 L355 270" stroke="#a59778" stroke-width="6" fill="none" stroke-linecap="round"/>;
+    svgHtml += <path d="M278 320 L245 250" stroke="#b3a57f" stroke-width="5" fill="none"/>;
+    svgHtml += <path d="M285 320 L325 245" stroke="#b3a57f" stroke-width="5" fill="none"/>;
+    svgHtml += <path d="M280 290 L280 180" stroke="#b7a982" stroke-width="4" fill="none"/>;
     
-    // рисуем листья (каждый с обработчиком через JS, но добавляем data-атрибуты)
+    // optional subtle foliage base circles (very light)
+    svgHtml += <circle cx="280" cy="220" r="95" fill="#e8e5d8" opacity="0.25" />;
+    
+    // draw leaves: mostly white (#f5f7f2) and ONE bright green (#40dd82)
     for (let i = 0; i < leafPositions.length; i++) {
       const pos = leafPositions[i];
       const isBright = (i === brightLeafIndex);
-      const fillColor = isBright ? "#3ae37a" : "#b9c4aa";
-      const strokeColor = isBright ? "#1f8a4c" : "#8f9b82";
-      const glow = isBright ? 'filter="url(#glow)"' : '';
-      // добавим свечение для яркого листа (определим фильтр)
-      svgHtml += <circle cx="${pos.cx}" cy="${pos.cy}" r="12" fill="${fillColor}" stroke="${strokeColor}" stroke-width="1.5" 
-      class="tree-leaf" data-leaf-idx="${i}" data-bright="${isBright}" style="cursor:pointer; transition:0.1s;" ${glow} />;
-      // внутренняя прожилка
-      svgHtml += <circle cx="${pos.cx}" cy="${pos.cy}" r="4" fill="${isBright ? '#c8ffa0' : '#e2e6d5'}" opacity="0.8" />;
+      // White / off-white for regular leaves, vivid green for special
+      const fillColor = isBright ? "#3ae37a" : "#F8FBF5";
+      const strokeColor = isBright ? "#1c8a4c" : "#cfd8ca";
+      const strokeWidth = isBright ? "1.8" : "1.2";
+      const shadowFilter = isBright ? 'filter="url(#softGlow)"' : '';
+      
+      svgHtml += <circle cx="${pos.cx}" cy="${pos.cy}" r="11" fill="${fillColor}" stroke="${strokeColor}" stroke-width="${strokeWidth}" 
+        class="tree-leaf" data-leaf-idx="${i}" data-bright="${isBright}" style="cursor:pointer; transition:all 0.1s ease;" ${shadowFilter} />;
+      // tiny vein inside leaf
+      svgHtml += <circle cx="${pos.cx}" cy="${pos.cy}" r="3.5" fill="${isBright ? '#c6ffb0' : '#e1e6db'}" opacity="0.7" />;
     }
     
-    // добавим определение фильтра свечения, если есть яркий лист
-    svgHtml += <defs><filter id="glow" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur in="SourceAlpha" stdDeviation="3"/><feMerge><feMergeNode in="offsetblur" /><feMergeNode in="SourceGraphic" /></feMerge></filter></defs>;
-    svgHtml += <text x="280" y="440" text-anchor="middle" fill="#4f6b5a" font-size="12" font-style="italic">твой путь — в зелёном листе 🌿</text>;
+    // glow filter for green leaf
+    svgHtml += <defs><filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur in="SourceAlpha" stdDeviation="2.5"/><feMerge><feMergeNode in="offsetblur" /><feMergeNode in="SourceGraphic" /></feMerge></filter></defs>;
+    svgHtml += <text x="280" y="450" text-anchor="middle" fill="#8ba793" font-size="11" font-style="italic">✦ click the vivid green leaf ✦</text>;
     svgHtml += </svg>;
     
     container.innerHTML = svgHtml;
     
-    // навешиваем обработчики на все листья, но только яркий лист будет показывать модалку с заданиями
+    // attach click handlers to leaves
     const leaves = document.querySelectorAll('.tree-leaf');
     leaves.forEach(leaf => {
       const isBright = leaf.getAttribute('data-bright') === 'true';
       leaf.addEventListener('click', (e) => {
         e.stopPropagation();
         if (isBright) {
-          if (leafClickCallback && typeof leafClickCallback === 'function') {
-            leafClickCallback();
-          } else {
-            console.warn('колбэк не задан');
-
-Мухсина, [4/2/2026 9:56 PM]
-}
+          if (onGreenLeafClick && typeof onGreenLeafClick === 'function') {
+            onGreenLeafClick();
+          }
         } else {
-          // бледный лист — небольшая подсказка
-          const tooltip = document.createElement('div');
-          tooltip.innerText = '🍂 Этот лист ещё не готов. Найди ярко-зелёный лист!';
-          tooltip.style.position = 'fixed';
-          tooltip.style.bottom = '20px';
-          tooltip.style.left = '50%';
-          tooltip.style.transform = 'translateX(-50%)';
-          tooltip.style.background = '#2f4d3e';
-          tooltip.style.color = '#f0f7e6';
-          tooltip.style.padding = '8px 18px';
-          tooltip.style.borderRadius = '40px';
-          tooltip.style.fontSize = '0.85rem';
-          tooltip.style.zIndex = '999';
-          tooltip.style.pointerEvents = 'none';
-          tooltip.style.opacity = '0.9';
-          document.body.appendChild(tooltip);
-          setTimeout(() => tooltip.remove(), 1500);
+          // subtle hint for white leaves
+          const hint = document.createElement('div');
+          hint.innerText = '🤍 This leaf is resting — find the vibrant green leaf!';
+          hint.style.position = 'fixed';
+          hint.style.bottom = '24px';
+          hint.style.left = '50%';
+          hint.style.transform = 'translateX(-50%)';
+          hint.style.backgroundColor = '#2c4a3b';
+          hint.style.color = '#eef3e8';
+          hint.style.padding = '6px 18px';
+          hint.style.borderRadius = '60px';
+          hint.style.fontSize = '0.8rem';
+          hint.style.zIndex = '999';
+          hint.style.pointerEvents = 'none';
+          hint.style.fontWeight = '500';
+          document.body.appendChild(hint);
+          setTimeout(() => hint.remove(), 1400);
         }
       });
       leaf.style.cursor = 'pointer';
     });
   }
-
-  // -------- модальное окно с заданиями --------
-  let currentTasksArray = [];
-
-  function showModalWithTasks(tasks) {
+  
+  // ------------------- MODAL LOGIC -------------------
+  let currentTaskList = [];
+  function showTaskModal(tasks) {
     const modal = document.getElementById('taskModal');
-    const taskListUl = document.getElementById('taskListUl');
-    if (!modal || !taskListUl) return;
-    taskListUl.innerHTML = '';
-    if (tasks.length === 0) {
-      taskListUl.innerHTML = '<li>✨ Задания сгенерируются после заполнения формы ✨</li>';
+    const taskContainer = document.getElementById('taskListUl');
+    if (!modal || !taskContainer) return;
+
+Мухсина, [4/2/2026 10:08 PM]
+taskContainer.innerHTML = '';
+    if (!tasks || tasks.length === 0) {
+      taskContainer.innerHTML = '<li>✨ Fill the questions & regenerate your tree ✨</li>';
     } else {
-      tasks.forEach(task => {
+      tasks.forEach(t => {
         const li = document.createElement('li');
-        li.textContent = task;
-        taskListUl.appendChild(li);
+        li.textContent = t;
+        taskContainer.appendChild(li);
       });
     }
     modal.style.display = 'flex';
   }
-
-  function closeModal() {
+  
+  function closeModalFn() {
     const modal = document.getElementById('taskModal');
     if (modal) modal.style.display = 'none';
   }
-
-  // ------ основная генерация дерева и заданий с учётом ответов и стиля ------
-  let selectedStyle = "working"; // по умолчанию
+  
+  // ------------------- GLOBAL STATE -------------------
+  let selectedStyle = "working";
   let currentGoal = "", currentBlocker = "", currentResources = "";
-  let latestTasks = [];
-
-  // слушатели для кнопок стиля
-  const styleBtns = document.querySelectorAll('.style-btn');
-  styleBtns.forEach(btn => {
+  let latestGeneratedTasks = [];
+  
+  // style buttons handler
+  const styleButtons = document.querySelectorAll('.style-btn');
+  styleButtons.forEach(btn => {
     btn.addEventListener('click', () => {
-      styleBtns.forEach(b => b.classList.remove('active'));
+      styleButtons.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       selectedStyle = btn.getAttribute('data-style');
     });
   });
-  // активируем дефолтный стиль working
+  // default active working
   document.querySelector('.style-btn[data-style="working"]').classList.add('active');
-
-  // функция генерации и обновления дерева (а также подготовка заданий)
-  function onGenerate() {
-    // считываем поля
+  
+  // GENERATE button action: read values, create tasks, render tree with click handler
+  function handleGenerate() {
     currentGoal = document.getElementById('goalInput').value;
     currentBlocker = document.getElementById('blockerInput').value;
     currentResources = document.getElementById('resourcesInput').value;
     
-    // генерируем свежие задания на основе текущих данных
-    latestTasks = generateTasks(currentGoal, currentBlocker, currentResources, selectedStyle);
+    latestGeneratedTasks = generateTasks(currentGoal, currentBlocker, currentResources, selectedStyle);
     
-    // функция, которая будет вызвана при клике на яркий лист
-    const onBrightLeafClick = () => {
-      if (latestTasks.length === 0) {
-        // fallback: сгенерируем ещё раз
-        latestTasks = generateTasks(currentGoal, currentBlocker, currentResources, selectedStyle);
+    // define callback for bright leaf click
+    const onGreenClick = () => {
+      if (latestGeneratedTasks.length === 0) {
+        // fallback regenerate just in case
+        latestGeneratedTasks = generateTasks(currentGoal, currentBlocker, currentResources, selectedStyle);
       }
-      showModalWithTasks(latestTasks);
+      showTaskModal(latestGeneratedTasks);
     };
     
-    // отрисовываем дерево с новым обработчиком
-    renderTree(onBrightLeafClick);
+    drawMinimalTree(onGreenClick);
   }
-
-  // зеленая кнопка
-  const genBtn = document.getElementById('generateTreeBtn');
-  genBtn.addEventListener('click', onGenerate);
   
-  // закрытие модалки
-  const closeBtn = document.getElementById('closeModalBtn');
-  if (closeBtn) closeBtn.addEventListener('click', closeModal);
+  const generateBtn = document.getElementById('generateTreeBtn');
+  generateBtn.addEventListener('click', handleGenerate);
+  
+  // close modal events
+  const closeModalBtn = document.getElementById('closeModalBtn');
+  if (closeModalBtn) closeModalBtn.addEventListener('click', closeModalFn);
   window.addEventListener('click', (e) => {
     const modal = document.getElementById('taskModal');
-    if (e.target === modal) closeModal();
+    if (e.target === modal) closeModalFn();
   });
   
-  // при загрузке страницы покажем дефолтное дерево-заглушку с сообщением и примерными задачами
-
-Мухсина, [4/2/2026 9:56 PM]
-// но сразу после загрузки создадим пустые задачи по умолчанию чтобы был контент
-  (function initDemo() {
-    // зададим демо-тексты для примера, но пользователь их изменит
-    document.getElementById('goalInput').placeholder = "Пример: выучить английский до уровня Advanced";
-    document.getElementById('blockerInput').placeholder = "Пример: стесняюсь говорить, мало практики";
-    document.getElementById('resourcesInput').placeholder = "Пример: 1 час в день, знаю базу, есть друг-носитель";
-    // генерируем начальные задания с дефолтными полями (не пустыми)
+  // initial tree on page load: generate default / demo tree with placeholder tasks
+  (function initDemoTree() {
+    // set placeholder texts inside fields (not overwriting but just for demo)
+    const goalTextarea = document.getElementById('goalInput');
+    const blockerTextarea = document.getElementById('blockerInput');
+    const resourcesTextarea = document.getElementById('resourcesInput');
+    if (goalTextarea.value === "") goalTextarea.placeholder = "e.g., build a side project, become more confident...";
+    if (blockerTextarea.value === "") blockerTextarea.placeholder = "e.g., lack of structure, fear of failure...";
+    if (resourcesTextarea.value === "") resourcesTextarea.placeholder = "e.g., 45 min daily, HTML/CSS skills, friends...";
+    
     currentGoal = "";
     currentBlocker = "";
     currentResources = "";
-    latestTasks = generateTasks("достичь осознанного роста", "нерешительность и прокрастинация", "желание и окружение", "working");
-    const tempClick = () => {
-      showModalWithTasks(latestTasks);
+    latestGeneratedTasks = generateTasks("find direction & grow", "initial inertia", "curiosity & small habits", "working");
+    const demoClickHandler = () => {
+      showTaskModal(latestGeneratedTasks);
     };
-    renderTree(tempClick);
-    // также обновляем обработчик при генерации, но показываем дерево-заставку
+    drawMinimalTree(demoClickHandler);
   })();
 </script>
 </body>
